@@ -5,6 +5,7 @@
 #load "Resources.fs"
 #load "NodejsInterop.fs"
 #load "Mongodb.fs"
+#load "Performance.fs"
 
 open Fable.Demo
 open Fable.Core
@@ -54,7 +55,7 @@ module Samples =
 
 //Samples.test()
 //StructManip.test()
-//Resources.test()
+Resources.test()
 
 //let events = NodejsInterop.test()
 //
@@ -65,4 +66,4 @@ module Samples =
 //}
 //|> Async.Start
 
-Mongodb.test().catch(System.Func<obj, unit>(fun e -> printfn "Error: %A" e))
+//Mongodb.test().catch(System.Func<obj, unit>(fun e -> printfn "Error: %A" e))

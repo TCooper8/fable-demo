@@ -1,13 +1,6 @@
 namespace Fable.Demo
 
 module StructManip =
-  type Expr =
-    | String of string
-    | Int of int
-    | Float of float
-    | List of Expr list
-    | Bool of bool
-
   type Contact = {
     name: string
     phone: string
@@ -21,9 +14,16 @@ module StructManip =
   }
 
   let invalidStrs =
-    [ string '"'
-      string '\n'
+    [ "\""
+      "\n"
     ]
+
+  type Expr =
+    | String of string
+    | Int of int
+    | Float of float
+    | List of Expr list
+    | Bool of bool
 
   // Checking for invalid characters.
   let (|ValidString|_|) = function
@@ -39,21 +39,25 @@ module StructManip =
         phone = phone
         confirmed = confirmed
       }
+    | List [ String name; String phone; Bool confirmed ] ->
+      failwith (sprintf "Argument 'name' was expected to be a string that does not contain the following, %A." invalidStrs)
     | any -> failwith (sprintf "Expected List of (name:string, phone:string, confirmed:bool) but got %A" any)
 
   // Evaluate embedded DSL.
   let evalUser = function
-    | List [String name; Int age; List contacts ] ->
+    | List [ ValidString name; Int age; List contacts ] ->
       { name = name
         age = age
         contacts = contacts |> Seq.map evalContact
       }
+    | List [ String name; Int age; List contacts ] ->
+      failwith (sprintf "Argument 'name' was expected to be a string that does not contain the following, %A." invalidStrs)
     | any -> failwith (sprintf "Expected List of (name:string, age:int, contact: list) but got %A" any)
 
   let test () =
     let test =
       List [
-        String "bob"
+        String "\nname is bob "
         Int 5
         List [
           List [

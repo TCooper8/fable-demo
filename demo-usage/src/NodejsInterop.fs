@@ -42,7 +42,7 @@ module NodejsInterop =
     server.get.Invoke ("/hello/:name", JsFunc3(fun req res next ->
       res.send ("hello " + req.``params``.name)
       next()
-      ))
+    ))
 
     server.listen.Invoke (8080, fun () ->
       printfn "Started"
@@ -52,6 +52,6 @@ module NodejsInterop =
       | Close ->
         printfn "Closing server..."
         server.close()
-        )
+    )
 
     events

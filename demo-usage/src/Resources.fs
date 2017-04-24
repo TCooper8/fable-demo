@@ -3,12 +3,14 @@ namespace Fable.Demo
 open System
 
 module Resources =
+  // Create the interface for a File System.
   [<Interface>]
   type IFileSystem =
     abstract ``open``: string -> int
     abstract close: int -> unit
     abstract read: int -> string
 
+  // This class is a resource hog that uses the file system.
   type ResourceHog (fs:IFileSystem, files) =
     let fileDescriptors = files |> List.map fs.``open``
 
@@ -19,6 +21,7 @@ module Resources =
     member x.readFiles () =
       fileDescriptors |> List.map fs.read
 
+  // File system implementation.
   type FileSystem () =
     let files: Map<int, string> ref = ref Map.empty
 
@@ -37,15 +40,30 @@ module Resources =
         Map.find fd !files
 
   let test () =
+    // Create file system and a file names that need to be opened.
     let fs = FileSystem ()
     let files = [
-      "hello"
-      "goodbye"
-      "test.csv"
+      "1.csv"
+      "2.csv"
+      "3.csv"
     ]
 
-    use hog = new ResourceHog (fs, files)
-    let dataList = hog.readFiles()
-    for data in dataList do
-      printfn "Data: %s" data
+    do
+      printfn "Running happy path test..."
+      // Note: The use expression.
+      use hog = new ResourceHog (fs, files)
+
+      let dataList = hog.readFiles()
+      for data in dataList do
+        printfn "Data: %s" data
+
+    // Now, try it with failure.
+    do
+      printfn "Running path with failure...\n"
+      try
+        use hog = new ResourceHog (fs, files)
+        printfn "Failing test..."
+        failwith "BAM!"
+      with e ->
+        printfn "Error: %s" e.Message
     ()
