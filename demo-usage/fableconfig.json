@@ -1,0 +1,6 @@
+﻿{
+    "projFile": "./src/index.fsx",
+    "sourceMaps": true,
+    "module": "commonjs",
+    "outDir": "bin"
+}

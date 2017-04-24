@@ -1,0 +1,14 @@
+{
+  "name": "ml-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node node_modules/fable-compiler"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fable-compiler": "^0.7.50"
+  }
+}

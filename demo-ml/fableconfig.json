@@ -1,0 +1,7 @@
+﻿{
+    "projFile": "./src/index.fsx",
+    "sourceMaps": true,
+    "rollup": {
+        "dest": "./bin/bundle.js"
+    }
+}
