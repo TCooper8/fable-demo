@@ -1,7 +1,10 @@
 #r "../node_modules/fable-core/Fable.Core.dll"
+#r "../node_modules/fable-powerpack/Fable.PowerPack.dll"
+#load "Try.fs"
 #load "StructManip.fs"
 #load "Resources.fs"
 #load "NodejsInterop.fs"
+#load "Mongodb.fs"
 
 open Fable.Demo
 open Fable.Core
@@ -32,7 +35,7 @@ module Samples =
     let events = new Event<UserChanged>()
     use listener = listen events.Publish
 
-    for i in 0 .. 10 do
+    for i in 0 .. 1 do
       let user = {
         id = string i
         name = "User " + string i
@@ -53,11 +56,13 @@ module Samples =
 //StructManip.test()
 //Resources.test()
 
-let events = NodejsInterop.test()
+//let events = NodejsInterop.test()
+//
+//async {
+//  printfn "Closing server in 10 seconds..."
+//  do! Async.Sleep 10000
+//  events.Trigger (NodejsInterop.Close)
+//}
+//|> Async.Start
 
-async {
-  printfn "Closing server in 10 seconds..."
-  do! Async.Sleep 10000
-  events.Trigger (NodejsInterop.Close)
-}
-|> Async.Start
+Mongodb.test().catch(System.Func<obj, unit>(fun e -> printfn "Error: %A" e))

@@ -1,0 +1,15 @@
+{
+  "name": "demo-fscheme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node node_modules/fable-compiler"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fable-compiler": "^0.7.50",
+    "fable-core": "^0.7.30"
+  }
+}

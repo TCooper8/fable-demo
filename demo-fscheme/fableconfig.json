@@ -1,0 +1,7 @@
+{
+  "projFile": "./src/index.fsx",
+  "sourceMaps": true,
+  "module": "commonjs",
+  "plugins": [ "src/Fable.Plugins.System.Char.fsx" ],
+  "outDir": "lib"
+}
